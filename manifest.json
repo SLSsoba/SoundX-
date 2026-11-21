@@ -1,0 +1,25 @@
+{
+  "name": "SoundX - KTV Room Manager",
+  "short_name": "SoundX",
+  "description": "Pencatatan room KTV, alat, maintenance, kerusakan, dan perbaikan",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#6366f1",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

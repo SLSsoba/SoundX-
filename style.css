@@ -1,0 +1,360 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-2: #273449;
+  --border: #334155;
+  --text: #e2e8f0;
+  --text-dim: #94a3b8;
+  --primary: #6366f1;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --radius: 14px;
+}
+
+html, body { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- HEADER (Mobile) ---------- */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-logo {
+  width: 32px; height: 32px; border-radius: 8px; background: var(--primary);
+  display: grid; place-items: center; font-weight: 800; color: #fff; font-size: 14px;
+}
+.brand h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+.header-actions { display: flex; gap: 8px; }
+
+.icon-btn {
+  width: 36px; height: 36px; border-radius: 10px; border: none;
+  background: var(--surface-2); color: var(--text);
+  display: grid; place-items: center; cursor: pointer; font-size: 16px;
+}
+.icon-btn:active { transform: scale(0.95); }
+
+/* ---------- MAIN / VIEWS (Mobile) ---------- */
+main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  padding-bottom: 100px;
+}
+
+.view { display: none; }
+.view.active { display: block; }
+
+.view-title {
+  font-size: 13px; color: var(--text-dim); text-transform: uppercase;
+  letter-spacing: 0.08em; margin-bottom: 12px; padding-left: 4px;
+}
+
+.empty { text-align: center; color: var(--text-dim); padding: 40px 20px; font-size: 14px; }
+
+/* ---------- CARD ---------- */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px; margin-bottom: 10px;
+}
+.card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.card-title { font-weight: 600; font-size: 15px; }
+.card-sub { font-size: 12px; color: var(--text-dim); margin-top: 3px; }
+.card-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.card-actions .icon-btn { width: 32px; height: 32px; font-size: 14px; }
+
+/* ---------- BADGE / SELECT STATUS ---------- */
+.badge-select {
+  appearance: none; -webkit-appearance: none; border: none; border-radius: 999px;
+  padding: 5px 26px 5px 12px; font-size: 12px; font-weight: 600; color: #fff; cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat; background-position: right 8px center;
+}
+.badge-select[data-status="available"]   { background-color: var(--success); }
+.badge-select[data-status="in_use"]      { background-color: var(--warning); }
+.badge-select[data-status="maintenance"] { background-color: var(--danger); }
+.badge-select[data-status="good"]        { background-color: var(--success); }
+.badge-select[data-status="damaged"]     { background-color: var(--danger); }
+.badge-select[data-status="repairing"]   { background-color: var(--warning); }
+
+.badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+.badge.type-maintenance { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+.badge.type-damage      { background: rgba(239,68,68,0.2);  color: #fca5a5; }
+.badge.type-repair      { background: rgba(245,158,11,0.2); color: #fcd34d; }
+.badge.open             { background: rgba(239,68,68,0.15); color: #fca5a5; }
+.badge.done             { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+
+.status-row { margin-top: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+/* ---------- BOTTOM NAV (Mobile) ---------- */
+nav.bottom {
+  display: flex; background: var(--surface); border-top: 1px solid var(--border);
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 20;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tab-btn {
+  flex: 1; padding: 12px 4px; border: none; background: transparent;
+  color: var(--text-dim); font-size: 11px; font-weight: 600; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.tab-btn.active { color: var(--primary); }
+
+.tab-icon {
+  width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; fill: none;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Sembunyikan logo sidebar di HP */
+.sidebar-brand { display: none; }
+
+/* ---------- POWERED BY (Sembunyi di HP) ---------- */
+.powered-by { display: none; }
+
+/* ---------- FAB ---------- */
+.fab {
+  position: fixed; bottom: 84px; right: 20px; width: 56px; height: 56px;
+  border-radius: 50%; background: var(--primary); color: #fff; border: none;
+  font-size: 28px; font-weight: 300; cursor: pointer;
+  box-shadow: 0 8px 24px rgba(99,102,241,0.4); z-index: 99; display: grid; place-items: center;
+}
+.fab:active { transform: scale(0.92); }
+
+/* ---------- MODAL ---------- */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: grid; place-items: center; z-index: 1000; padding: 20px; }
+.modal.hidden { display: none; }
+.modal-content { background: var(--surface); border-radius: 16px; padding: 20px; width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto; }
+.modal-content h3 { font-size: 17px; margin-bottom: 16px; }
+.modal-content label { display: block; font-size: 12px; color: var(--text-dim); margin-bottom: 6px; margin-top: 12px; }
+.modal-content input, .modal-content select, .modal-content textarea {
+  width: 100%; padding: 10px 12px; background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 10px; color: var(--text);
+  font-size: 14px; font-family: inherit;
+}
+.modal-content textarea { resize: vertical; min-height: 70px; }
+.modal-content input:focus, .modal-content select:focus, .modal-content textarea:focus { outline: none; border-color: var(--primary); }
+.modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+
+/* ---------- BUTTONS ---------- */
+.btn { flex: 1; padding: 11px; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.btn.primary { background: var(--primary); color: #fff; }
+.btn.ghost   { background: var(--surface-2); color: var(--text); }
+.btn.danger  { background: var(--danger); color: #fff; }
+.btn:active  { transform: scale(0.98); }
+
+/* ---------- SETTINGS ---------- */
+.settings-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 8px; }
+.settings-row:last-child { border-bottom: none; }
+.settings-row span { font-size: 14px; }
+
+/* ---------- DAILY ROOM LOG ---------- */
+.daily-filter { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; padding: 0 4px; }
+.chip {
+  padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text-dim); font-size: 12px;
+  font-weight: 600; cursor: pointer; font-family: inherit; flex-shrink: 0;
+}
+.chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+.daily-filter input[type="date"] {
+  flex: 1; min-width: 0; padding: 8px 12px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 10px; color: var(--text);
+  font-size: 13px; font-family: inherit; color-scheme: dark;
+}
+.daily-filter input[type="date"]:focus { outline: none; border-color: var(--primary); }
+
+/* ---------- EQUIPMENT & SEARCH ---------- */
+.equipment-detail-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.equipment-detail-row:last-child { border-bottom: none; }
+.search-bar { margin-bottom: 12px; padding: 0 4px; }
+.search-bar input { width: 100%; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 14px; font-family: inherit; }
+.search-bar input:focus { outline: none; border-color: var(--primary); }
+
+/* ---------- LOG REPORT SUMMARY ---------- */
+.log-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; padding: 0 4px; }
+.summary-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 8px; text-align: center; }
+.summary-box .val { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.summary-box .lbl { font-size: 11px; color: var(--text-dim); font-weight: 600; }
+
+/* ---------- DASHBOARD WIDGETS (Sembunyi di HP) ---------- */
+.dashboard-grid { display: none; }
+
+/* ---------- PRINT STYLES (KHUSUS CETAK) ---------- */
+@media print {
+  body { background: #fff !important; color: #000 !important; height: auto; overflow: visible; display: block; }
+  header, nav.bottom, .fab, .modal, .daily-filter, .card-actions, .view-title button, .search-bar { display: none !important; }
+  main { padding: 0; overflow: visible; display: block; margin: 0 !important; width: 100% !important; }
+  .view { display: none !important; }
+  .view.active { display: block !important; }
+  .card { border: 1px solid #ccc !important; background: #fff !important; color: #000 !important; box-shadow: none; page-break-inside: avoid; margin-bottom: 12px; }
+  .card-title, .card-sub { color: #000 !important; }
+  .badge, .badge-select { border: 1px solid #ccc !important; background: transparent !important; color: #000 !important; }
+  .log-summary { page-break-inside: avoid; }
+  .summary-box { border: 1px solid #ccc !important; background: #fff !important; }
+  .summary-box .val { color: #000 !important; }
+  .summary-box .lbl { color: #333 !important; }
+}
+
+/* =========================================
+   DESKTOP RESPONSIVE (LAYAR > 900px)
+   ========================================= */
+@media (min-width: 900px) {
+  /* 1. Layout Grid: Sidebar 260px, Konten Sisa Layar */
+  body {
+    display: grid !important;
+    grid-template-columns: 260px 1fr !important;
+    height: 100vh !important;
+    overflow: hidden !important;
+    background: var(--bg);
+  }
+
+  header { display: none !important; }
+
+  /* 2. Sidebar (Kolom 1) */
+  nav.bottom {
+    position: static !important;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    height: 100vh !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    border-top: none !important;
+    border-right: 1px solid var(--border) !important;
+    padding: 24px 16px !important;
+    padding-bottom: 60px !important;
+    background: var(--surface) !important;
+    z-index: 10 !important;
+  }
+
+  /* Logo Sidebar Desktop */
+  .sidebar-brand {
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 36px;
+    padding-left: 12px;
+  }
+  .sidebar-brand img {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+  .sidebar-brand span {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.03em;
+  }
+
+  .tab-btn {
+    flex: 0 0 auto !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    padding: 14px 16px !important;
+    font-size: 15px !important;
+    gap: 16px !important;
+    border-radius: 12px !important;
+    margin-bottom: 8px !important;
+    width: 100%;
+    cursor: pointer;
+    pointer-events: auto !important;
+  }
+  
+  .tab-btn.active {
+    background: rgba(99, 102, 241, 0.15) !important;
+    color: var(--primary) !important;
+  }
+
+  .powered-by {
+    display: block !important;
+    margin-top: auto !important;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-dim);
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    width: 100%;
+    letter-spacing: 0.05em;
+  }
+
+  /* 3. Area Konten Utama (Kolom 2) */
+  main {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    padding: 32px 40px !important;
+    padding-bottom: 80px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    z-index: 1 !important;
+  }
+
+  /* 4. Grid Kartu di dalam Konten */
+  #roomsList, #equipmentList, #dailyList, #logsList {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    gap: 16px !important;
+    align-items: start !important;
+    width: 100% !important;
+  }
+
+  /* 5. Dashboard Widget */
+  .dashboard-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px !important;
+    margin-bottom: 32px !important;
+    width: 100% !important;
+  }
+  .dash-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .dash-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary);
+  }
+  .dash-card.success::before { background: var(--success); }
+  .dash-card.warning::before { background: var(--warning); }
+  .dash-card.danger::before { background: var(--danger); }
+
+  .dash-title { font-size: 13px; color: var(--text-dim); font-weight: 600; text-transform: uppercase; }
+  .dash-val { font-size: 32px; font-weight: 800; color: var(--text); line-height: 1; }
+  .dash-sub { font-size: 12px; color: var(--text-dim); margin-top: auto; }
+
+  /* Posisi Tombol + (FAB) */
+  .fab {
+    position: fixed !important;
+    bottom: 40px !important;
+    right: 40px !important;
+    width: 64px !important;
+    height: 64px !important;
+    font-size: 32px !important;
+    z-index: 999 !important;
+  }
+}

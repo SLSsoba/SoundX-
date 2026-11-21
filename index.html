@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#6366f1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>SoundX</title>
+<link rel="manifest" href="manifest.json">
+<!-- Favicon menggunakan logo.png -->
+<link rel="icon" href="logo.png" type="image/png">
+<link rel="apple-touch-icon" href="logo.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <!-- Logo di Header HP -->
+    <div class="brand-logo" style="background: transparent; padding: 0; overflow: hidden;">
+      <img src="logo.png" alt="SoundX" style="width: 100%; height: 100%; object-fit: cover;">
+    </div>
+    <h1>SoundX</h1>
+  </div>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="openSettings()" title="Pengaturan">
+      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- VIEW: ROOM (Dengan Dashboard Widget) -->
+  <section id="view-rooms" class="view active">
+    <div id="dashboardSummary" class="dashboard-grid"></div>
+    <div class="view-title">Room KTV</div>
+    <div id="roomsList"></div>
+  </section>
+
+  <!-- VIEW: ALAT (Dengan Search Bar) -->
+  <section id="view-equipment" class="view">
+    <div class="view-title">Alat</div>
+    <div class="search-bar">
+      <input type="text" id="equipSearch" placeholder="Cari nama alat, jenis, atau room..." oninput="handleEquipSearch(this.value)">
+    </div>
+    <div id="equipmentList"></div>
+  </section>
+
+  <!-- VIEW: HARIAN (Log Room) -->
+  <section id="view-daily" class="view">
+    <div class="view-title">Log Room Harian</div>
+    <div id="dailyFilter" class="daily-filter"></div>
+    <div id="dailyList"></div>
+  </section>
+
+  <!-- VIEW: LOG & LAPORAN (Dengan Tombol Cetak & Ringkasan) -->
+  <section id="view-logs" class="view">
+    <div class="view-title" style="display: flex; justify-content: space-between; align-items: center;">
+      <span>Laporan & Log</span>
+      <button class="icon-btn" onclick="window.print()" title="Cetak Laporan" style="width: auto; padding: 0 14px; font-size: 13px; font-weight: 600; height: 32px;">
+        Cetak
+      </button>
+    </div>
+    <div id="logSummary" class="log-summary"></div>
+    <div id="logFilter" class="daily-filter"></div>
+    <div id="logsList"></div>
+  </section>
+</main>
+
+<!-- TOMBOL TAMBAH (FAB) dengan Tooltip F2 -->
+<button class="fab" onclick="handleFab()" title="Tambah Data (F2)">+</button>
+
+<!-- NAVIGASI BAWAH / SIDEBAR KIRI -->
+<nav class="bottom">
+  <!-- Logo Sidebar Desktop -->
+  <div class="sidebar-brand">
+    <img src="logo.png" alt="Logo">
+    <span>SoundX</span>
+  </div>
+
+  <button class="tab-btn active" data-view="rooms" onclick="switchView('rooms')">
+    <svg class="tab-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+    <span>Room</span>
+  </button>
+  <button class="tab-btn" data-view="equipment" onclick="switchView('equipment')">
+    <svg class="tab-icon" viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+    <span>Alat</span>
+  </button>
+  <button class="tab-btn" data-view="daily" onclick="switchView('daily')">
+    <svg class="tab-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+    <span>Harian</span>
+  </button>
+  <button class="tab-btn" data-view="logs" onclick="switchView('logs')">
+    <svg class="tab-icon" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><line x1="9" y1="14" x2="15" y2="14"></line><line x1="9" y1="18" x2="15" y2="18"></line></svg>
+    <span>Log</span>
+  </button>
+  
+  <!-- TULISAN POWERED BY CRD -->
+  <div class="powered-by">Powered by CRD</div>
+</nav>
+
+<!-- MODAL (POP-UP FORM) -->
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <h3 id="modalTitle"></h3>
+    <div id="modalBody"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="closeModal()">Batal</button>
+      <button class="btn primary" id="modalSave">Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- FIREBASE SDK (COMPAT VERSION) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-database-compat.js"></script>
+
+<script>
+  // Konfigurasi Firebase Anda
+  const firebaseConfig = {
+    apiKey: "AIzaSyDjx7-KFZ9LXHSPVrdue24osLTAsj43ixk",
+    authDomain: "soundx-b1f76.firebaseapp.com",
+    databaseURL: "https://soundx-b1f76-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "soundx-b1f76",
+    storageBucket: "soundx-b1f76.firebasestorage.app",
+    messagingSenderId: "272616177496",
+    appId: "1:272616177496:web:e0360378c95ac99239ef2d",
+    measurementId: "G-Q3Y205YS0K"
+  };
+
+  // Inisialisasi Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // Ekspos fungsi ke global window agar bisa dipakai di app.js
+  window.FB = {
+    save: (data) => db.ref('soundx_state').set(data),
+    listen: (callback) => db.ref('soundx_state').on('value', (snapshot) => {
+      callback(snapshot.val());
+    })
+  };
+</script>
+
+<!-- MAIN APP LOGIC -->
+<script src="app.js"></script>
+</body>
+</html>
